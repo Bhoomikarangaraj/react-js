@@ -1,18 +1,26 @@
- import React from 'react' ;
+import React,{useState,useEffect}from 'react'
 
 function App() {
-  const [color, setColor ] = React.useState("white");
+   const[user,setuser]=useState([])
+   useEffect(()=>{
+    fetch("https://jsonplaceholder.typicode.com/users")
+    .then((response)=>response.json())
+    .then((data)=>setuser(data))
+
+   },[])
   return (
-    <div className="container">
-      <h1 className="title">color picker</h1>
-      <div className="btn-group">
-        <button className="btn1" onClick={()=>setColor("red")}>Red</button>
-        <button className="btn2" onClick={()=>setColor("green")}>Green</button>
-        <button className="btn3" onClick={()=>setColor("blue")}>Blue</button>
+    <div className='container'>
+      <h2 className='title'>UserDetails</h2>
+      <div className='user-list'>
+        {user.map((Details)=>(
+          <div key={user.id}>
+            <p>Name:{Details.name}</p>
+            <p>user email:{Details.email}</p>
+          </div>
+        ))}
       </div>
-      <div className="color-box" style={{ backgroundColor: color, height: "200px", width: "200px" }}></div>
     </div>
-  );
+  )
 }
 
 export default App
